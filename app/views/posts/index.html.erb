@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="row">
+<div class="col s12 m8 offset-m2">
+<h3>All User Images</h3>
+</div>
+
+</div>
+<div class="row">
+
+    <% @posts.each do |post| %>
+    <div class="col s12 m8 offset-m2">
+      <div class="card">
+        <div class="card-image">
+          <%= image_tag post.image %>
+          <span class="card-title"></span>
+        </div>
+        <div class="card-content">
+          <p><%= post.description %></p>
+        </div>
+        <div class="card-action">
+          <%= link_to like_post_path(post), method: :put do %>
+          <% if current_user %>
+            <% if current_user.voted_as_when_voted_for post %>
+              <i class="fa fa-heart", style="color: red; font-size: 30px;"></i>
+
+              <% else %>
+                <i class="fa fa-heart-o", style=" font-size: 30px; color: black"></i>
+              <% end %>
+            <% end %>
+          <% end %>
+          <br />
+          <br />
+          <strong>
+            <% post.votes_for.each do |vote| %>
+              <%= User.find_by(id: vote[:voter_id]).username %>
+            <% end %>
+          </strong>
+
+        </div>
+      </div>
+    </div>
+    <% end %>
+ </div>
+
+
+
+
+
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>
